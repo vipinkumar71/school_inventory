@@ -14,7 +14,9 @@ class Teacher:
     def teacher_map_return(self):
         return {
             1: self.get_list,
-            2: self.add
+            2: self.add,
+            3: self.update,
+            4: self.delete
         }
 
     def display_options(self):
@@ -25,10 +27,19 @@ class Teacher:
         print("4. Delete teacher")
         selected_input = int(input("Select option: "))
         if selected_input == 2:
-            name = input("Enter student name")
+            name = input("Enter student name:")
             self.teacher_map_return().get(selected_input)(name)
+        elif selected_input == 3:
+            name = input("Enter teacher name:")
+            id = input("Enter teacher id:")
+            self.teacher_map_return().get(selected_input)(name, id)
+        elif selected_input ==4:
+            id = input("Enter teacher id:")
+            self.teacher_map_return().get(selected_input)(id)
         else:
             self.teacher_map_return().get(selected_input)()
+
+    """CRUD operations"""
 
     def get_list(self):
         connection = get_db_cursor()
@@ -38,6 +49,7 @@ class Teacher:
             print(f"{teacher[0]}-----{teacher[1]}")
 
         connection.close()
+        print("You got your list")
 
     def add(self, name):
         connection = get_db_cursor()
@@ -46,3 +58,18 @@ class Teacher:
         connection.commit()
         connection.close()
         print("Successfully added 1 record")
+
+    def update(self, name, id):
+        connection = get_db_cursor()
+        cursor = connection.cursor()
+        cursor.execute(f"UPDATE {self.table} SET name='{name}' WHERE id={id};")
+        connection.commit()
+        connection.close()
+        print("Successfully updated 1 record")
+
+    def delete(self,id):
+        connection =get_db_cursor()
+        cursor=connection.cursor()
+        cursor.execute(f"DELETE from {self.table} WHERE id={id};")
+        connection.commit()
+        print("Successfully deleted 1 record")
