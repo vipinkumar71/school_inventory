@@ -3,17 +3,12 @@ Entrypoint for the project
 """
 from standard import Standard
 from student import Student
-from teacher import Teacher, Teacher
-
-
-class Student:
-    pass
-
+from teacher import Teacher
 
 OPTIONS_MAP = {
-    1: Student.display_options(),
-    2: Teacher.display_options(),
-    3: Standard.display_options()
+    1: Student().display_options,
+    2: Teacher().display_options,
+    3: Standard().display_options
 }
 
 
@@ -23,14 +18,15 @@ def display_options():
     print("Select your option")
     print("1. Student")
     print("2. Teacher")
-    print("2. Standard")
+    print("3. Standard")
 
 
 def option_router():
     """routes option according to the input"""
     selected_option = int(input("Enter your option:"))
-    return OPTIONS_MAP.get(selected_option)
+    return OPTIONS_MAP.get(selected_option)()
 
 
 if __name__ == '__main__':
     display_options()
+    option_router()
