@@ -10,7 +10,7 @@ class Standard:
     def __init__(self):
         pass
 
-    def standard_map_return(self):
+    def standard_option_map(self):
         return {
             1: self.get_list,
             2: self.add,
@@ -25,22 +25,21 @@ class Standard:
         print("2. Add standard")
         print("3. Update standard")
         print("4. Delete standard")
-        print("5. Update standard of student")
-        print("6. Get student by standard")
+
         selected_input = int(input("Select option: "))
         if selected_input == 2:
             standard_name = input("Enter standard name:")
-            self.standard_map_return().get(selected_input)(standard_name)
+            self.standard_option_map().get(selected_input)(standard_name)
         elif selected_input == 3:
             standard_name = input("Enter standard name:")
             id = input("Enter standard id:")
-            self.standard_map_return().get(selected_input)(standard_name, id)
+            self.standard_option_map().get(selected_input)(standard_name, id)
         elif selected_input == 4:
             id = input("Enter standard id:")
-            self.standard_map_return().get(selected_input)(id)
+            self.standard_option_map().get(selected_input)(id)
 
         else:
-            self.standard_map_return().get(selected_input)()
+            self.standard_option_map().get(selected_input)()
 
     """ get_list method we can find list of the standard table"""
 
