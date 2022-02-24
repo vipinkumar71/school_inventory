@@ -12,7 +12,7 @@ class Student:
     def __init__(self):
         pass
 
-    def student_map_return(self):
+    def student_option_map(self):
         return {
             1: self.get_list,
             2: self.add,
@@ -33,30 +33,30 @@ class Student:
         selected_input = int(input("Select option: "))
         if selected_input == 2:
             name = input("Enter student name:")
-            self.student_map_return().get(selected_input)(name)
+            self.student_option_map().get(selected_input)(name)
         elif selected_input == 3:
             name = input("Enter student name:")
-            id = input("Enter student id:")
-            self.student_map_return().get(selected_input)(name, id)
+            id = int(input("Enter student id:"))
+            self.student_option_map().get(selected_input)(name, id)
         elif selected_input == 4:
-            id = input("Enter student id:")
-            self.student_map_return().get(selected_input)(id)
+            id = int(input("Enter student id:"))
+            self.student_option_map().get(selected_input)(id)
         elif selected_input == 5:
             student_id = int(input("Enter the student id:"))
             standard_id = int(input("Enter the standard id:"))
-            self.student_map_return().get(selected_input)(student_id, standard_id)
+            self.student_option_map().get(selected_input)(student_id, standard_id)
         elif selected_input == 6:
             standard_id = int(input("Enter the standard_id:"))
-            self.student_map_return().get(selected_input)(standard_id)
+            self.student_option_map().get(selected_input)(standard_id)
         else:
-            self.student_map_return().get(selected_input)()
+            self.student_option_map().get(selected_input)()
 
     """CRUD OPERATIONS"""
 
     def get_list(self):
         connection = get_db_cursor()
         cursor = connection.cursor()
-        cursor.execute("SELECT * from student")
+        cursor.execute(f"SELECT * from {self.table}")
         for student in cursor.fetchall():
             print(f"{student[0]}-----{student[1]}")
         connection.close()
@@ -103,5 +103,3 @@ class Student:
         connection.commit()
         connection.close()
         print("Successfully update record")
-
-
