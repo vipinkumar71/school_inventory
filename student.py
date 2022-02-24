@@ -17,7 +17,9 @@ class Student:
             1: self.get_list,
             2: self.add,
             3: self.update,
-            4: self.delete
+            4: self.delete,
+            5: self.associate_standard,
+            6: self.get_student_by_standard
         }
 
     def display_options(self):
@@ -26,6 +28,8 @@ class Student:
         print("2. Add Student")
         print("3. Update student")
         print("4. Delete student")
+        print("5. Update standard of student")
+        print("6 Get student by standard")
         selected_input = int(input("Select option: "))
         if selected_input == 2:
             name = input("Enter student name:")
@@ -37,6 +41,13 @@ class Student:
         elif selected_input == 4:
             id = input("Enter student id:")
             self.student_map_return().get(selected_input)(id)
+        elif selected_input == 5:
+            student_id = int(input("Enter the student id:"))
+            standard_id = int(input("Enter the standard id:"))
+            self.student_map_return().get(selected_input)(student_id, standard_id)
+        elif selected_input == 6:
+            standard_id = int(input("Enter the standard_id:"))
+            self.student_map_return().get(selected_input)(standard_id)
         else:
             self.student_map_return().get(selected_input)()
 
@@ -74,3 +85,23 @@ class Student:
         connection.commit()
         connection.close()
         print("Successfully Delete 1 record")
+
+    def associate_standard(self, standard_id, student_id):
+        connection = get_db_cursor()
+        cursor = connection.cursor()
+        cursor.execute(f"UPDATE {self.table} SET standard_id='{standard_id}' WHERE id='{student_id}'")
+        connection.commit()
+        connection.close()
+        print("Successfully updated record")
+
+    def get_student_by_standard(self, standard_id):
+        connection = get_db_cursor()
+        cursor = connection.cursor()
+        cursor.execute(f"SELECT * FROM {self.table} WHERE standard_id= {standard_id}")
+        for student in cursor.fetchall():
+            print(student[1])
+        connection.commit()
+        connection.close()
+        print("Successfully update record")
+
+

@@ -25,6 +25,9 @@ class Teacher:
         print("2. Add teacher")
         print("3. Update teacher")
         print("4. Delete teacher")
+        print("5. Update standard of student")
+        print("6 Get student by standard")
+
         selected_input = int(input("Select option: "))
         if selected_input == 2:
             name = input("Enter student name:")
@@ -33,7 +36,7 @@ class Teacher:
             name = input("Enter teacher name:")
             id = input("Enter teacher id:")
             self.teacher_map_return().get(selected_input)(name, id)
-        elif selected_input ==4:
+        elif selected_input == 4:
             id = input("Enter teacher id:")
             self.teacher_map_return().get(selected_input)(id)
         else:
@@ -67,9 +70,9 @@ class Teacher:
         connection.close()
         print("Successfully updated 1 record")
 
-    def delete(self,id):
-        connection =get_db_cursor()
-        cursor=connection.cursor()
+    def delete(self, id):
+        connection = get_db_cursor()
+        cursor = connection.cursor()
         cursor.execute(f"DELETE from {self.table} WHERE id={id};")
         connection.commit()
         print("Successfully deleted 1 record")
