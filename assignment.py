@@ -18,6 +18,9 @@ class Assignment:
             2: self.add,
             3: self.update,
             4: self.delete,
+            5: self.get_assignment_by_teacher,
+            6: self.get_assignment_by_standard,
+            7: self.get_assignment_by_student
         }
 
     def display_options(self):
@@ -26,6 +29,9 @@ class Assignment:
         print("2. Add Assignment")
         print("3. Update Assignment")
         print("4. Delete Assignment")
+        print("5 Get assignment by standard")
+        print("6.Get assignment by teacher ")
+        print("7. Get assignment by student")
 
         selected_input = int(input("Select option: "))
         if selected_input == 2:
@@ -41,6 +47,15 @@ class Assignment:
         elif selected_input == 4:
             id = int(input("Enter Assignment id:"))
             self.assignment_option_map().get(selected_input)(id)
+        elif selected_input == 5:
+            standard_id = int(input("Enter standard id:"))
+            self.assignment_option_map().get(selected_input)(standard_id)
+        elif selected_input == 6:
+            teacher_id = int(input("Enter teacher id:"))
+            self.assignment_option_map().get(selected_input)(teacher_id)
+        elif selected_input == 7:
+            student_id = int(input("Enter student id:"))
+            self.assignment_option_map().get(selected_input)(student_id)
         else:
             self.assignment_option_map().get(selected_input)()
 
@@ -79,3 +94,33 @@ class Assignment:
         connection.commit()
         connection.close()
         print("Successfully Delete 1 record")
+
+    def get_assignment_by_standard(self, standard_id):
+        connection = get_db_cursor()
+        cursor = connection.cursor()
+        cursor.execute(f"SELECT * FROM {self.table} WHERE standard_id= {standard_id}")
+        for standard in cursor.fetchall():
+            print(standard[1])
+        connection.commit()
+        connection.close()
+        print("Successfully update record")
+
+    def get_assignment_by_teacher(self, teacher_id):
+        connection = get_db_cursor()
+        cursor = connection.cursor()
+        cursor.execute(f"SELECT * FROM {self.table} WHERE teacher_id= {teacher_id}")
+        for teacher in cursor.fetchall():
+            print(teacher[1])
+        connection.commit()
+        connection.close()
+        print("Successfully updated record")
+
+    def get_assignment_by_student(self, student_id):
+        connection = get_db_cursor()
+        cursor = connection.cursor()
+        cursor.execute(f"SELECT * FROM {self.table} WHERE student_id= {student_id}")
+        for student in cursor.fetchall():
+            print(student[1])
+        connection.commit()
+        connection.close()
+        print("Successfully update record")
