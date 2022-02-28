@@ -33,11 +33,10 @@ class Standard:
         elif selected_input == 3:
             standard_name = input("Enter standard name:")
             id = input("Enter standard id:")
-            self.standard_option_map().get(selected_input)(standard_name, id)
+            self.standard_option_map().get(selected_input)(standard_name,id)
         elif selected_input == 4:
             id = input("Enter standard id:")
             self.standard_option_map().get(selected_input)(id)
-
         else:
             self.standard_option_map().get(selected_input)()
 
